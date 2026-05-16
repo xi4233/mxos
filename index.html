@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>喜PCOS1.1.7</title>
+    <title>MXOS 1.2.0</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         * {
@@ -27,6 +27,8 @@
             --taskbar-bg: transparent;
             --text-color: #ffffff;
             --text-secondary: #9ca3af;
+            --desktop-text-color: #ffffff;
+            --desktop-text-secondary: #9ca3af;
             --bg-dark: #1a1a1a;
             --bg-darker: #121212;
             --window-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -40,8 +42,26 @@
             background: #000;
         }
 
-        * {
-            color: var(--text-color);
+        .desktop-icon-name, #taskbar, #start-menu, #lock-screen, .desktop-icons, #taskbar-clock, .taskbar-item, .taskbar-item span, #start-button, .start-menu-search, .start-menu-search input, .start-menu-sidebar a, .start-menu-header, #desktop-icon-grid .desktop-icon span, .desktop-icon span, .lock-screen-time, .lock-screen-date, #lock-screen .time-display, #lock-screen .date-display,
+        .settings-container *, .settings-item *, .settings-title, .settings-card-title, .settings-card-desc, .settings-subpage-header, .back-btn, .wallpaper-preview-label, .accent-color-option, .settings-subpage-title {
+            color: var(--desktop-text-color) !important;
+        }
+
+        .settings-item {
+            color: var(--desktop-text-color) !important;
+        }
+
+        .settings-sidebar span {
+            color: var(--desktop-text-color) !important;
+        }
+
+        .settings-item svg {
+            color: var(--desktop-text-color) !important;
+            fill: var(--desktop-text-color) !important;
+        }
+
+        .desktop-icon span, #taskbar-clock, .taskbar-item span {
+            color: var(--desktop-text-color) !important;
         }
 
         #wallpaper-bg {
@@ -110,14 +130,13 @@
         }
 
         .wallpaper-import-btn {
-            display: inline-block;
+            display: inline-flex;
             width: 80px;
             height: 50px;
             border-radius: 6px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px dashed rgba(255, 255, 255, 0.3);
             cursor: pointer;
-            display: flex;
             align-items: center;
             justify-content: center;
             color: #888;
@@ -129,6 +148,38 @@
             background: rgba(255, 255, 255, 0.2);
             border-color: #3b82f6;
             color: #3b82f6;
+        }
+
+        .video-wallpaper-btn {
+            display: inline-flex;
+            width: 80px;
+            height: 50px;
+            border-radius: 6px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 2px dashed rgba(139, 92, 246, 0.4);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: #a78bfa;
+            font-size: 20px;
+            transition: all 0.2s ease;
+            gap: 4px;
+        }
+
+        .video-wallpaper-btn:hover {
+            background: rgba(139, 92, 246, 0.25);
+            border-color: #8b5cf6;
+            color: #c4b5fd;
+        }
+
+        .video-wallpaper-btn .btn-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .video-wallpaper-btn .btn-label {
+            font-size: 10px;
+            font-weight: 500;
         }
 
         .accent-color-container {
@@ -225,6 +276,8 @@
         }
 
         .lock-datetime {
+            position: relative;
+            z-index: 10;
             margin-top: 80px;
             text-align: center;
         }
@@ -247,6 +300,8 @@
         }
 
         .lock-hint {
+            position: relative;
+            z-index: 10;
             font-size: 14px;
             color: rgba(255, 255, 255, 0.6);
             animation: pulse 2s ease-in-out infinite;
@@ -324,6 +379,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            transition: text-shadow 0.3s ease;
         }
 
         #taskbar {
@@ -752,7 +808,7 @@
             font-size: 28px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #fff;
+            color: var(--desktop-text-color) !important;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -797,25 +853,29 @@
             transform: translateY(-2px);
         }
 
-        .drive-item img {
-            width: 48px;
-            height: 48px;
+        .drive-item svg {
+            flex-shrink: 0;
         }
 
         .drive-info {
             display: flex;
             flex-direction: column;
+            flex: 1;
+            min-width: 0;
         }
 
         .drive-name {
             font-weight: 500;
             font-size: 14px;
-            color: #fff;
+            color: var(--desktop-text-color) !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .drive-size {
             font-size: 12px;
-            color: #888;
+            color: var(--desktop-text-secondary) !important;
         }
 
         .drive-bar {
@@ -858,62 +918,6 @@
             font-size: 13px;
             text-align: center;
             word-break: break-word;
-        }
-
-        .drive-item {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            gap: 12px;
-        }
-
-        .drive-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .drive-item svg {
-            flex-shrink: 0;
-        }
-
-        .drive-info {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .drive-name {
-            font-weight: 500;
-            font-size: 14px;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .drive-size {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .drive-bar {
-            width: 100%;
-            height: 6px;
-            background: #444;
-            border-radius: 3px;
-            margin-top: 6px;
-            overflow: hidden;
-        }
-
-        .drive-bar-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 3px;
         }
 
         .recycle-bin-content {
@@ -1301,15 +1305,6 @@
         .settings-item img {
             width: 20px;
             height: 20px;
-        }
-
-        .settings-main {
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
-            background: transparent;
-            backdrop-filter: blur(30px) saturate(180%) brightness(1.1);
-            -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(1.1);
         }
 
         .settings-title {
@@ -2599,6 +2594,7 @@
         </symbol>
     </svg>
     <div id="wallpaper-bg"></div>
+    <video id="video-wallpaper" autoplay loop muted playsinline style="position:fixed;top:0;left:0;width:100vw;height:100vh;object-fit:cover;z-index:0;display:none;pointer-events:none;"></video>
     <div id="desktop">
         <div id="selection-box"></div>
         <div class="desktop-icons">
@@ -3160,11 +3156,158 @@
         
         let thirdPartyAppData = {}; 
         let installedApps = JSON.parse(localStorage.getItem('mxos_installed_apps') || '[]');
+        let savedWallpaperSettings = JSON.parse(localStorage.getItem('mxos_wallpaper_settings') || '{}');
+
+        function updateLockScreenWallpaper(wallpaperUrl) {
+            const lockScreen = document.getElementById('lock-screen');
+            if (lockScreen) {
+                const existingLockVideo = document.getElementById('lock-video');
+                if (existingLockVideo) existingLockVideo.remove();
+                if (wallpaperUrl) {
+                    lockScreen.style.background = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${wallpaperUrl}') center/cover no-repeat`;
+                }
+            }
+        }
+
+        function detectWallpaperBrightness(imageUrl, callback) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 50;
+                    canvas.height = 50;
+                    ctx.drawImage(img, 0, 0, 50, 50);
+                    const imageData = ctx.getImageData(0, 0, 50, 50);
+                    const data = imageData.data;
+                    let totalLuminance = 0;
+                    const pixelCount = 50 * 50;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = data[i], g = data[i + 1], b = data[i + 2];
+                        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                        totalLuminance += luminance;
+                    }
+                    const avgBrightness = totalLuminance / pixelCount;
+                    callback(avgBrightness);
+                } catch (e) {
+                    console.warn('壁纸亮度检测失败:', e);
+                    callback(0.5);
+                }
+            };
+            img.onerror = () => callback(0.5);
+            img.src = imageUrl;
+        }
+
+        const OCEAN_WALLPAPER_URLS = [
+            'https://images.unsplash.com/photo-1505118380757-91f5f5632de0',
+            'photo-1505118380757-91f5f5632de0'
+        ];
+
+        function isOceanWallpaper(url) {
+            return OCEAN_WALLPAPER_URLS.some(oceanUrl => url.includes(oceanUrl));
+        }
+
+        function applyTextColorsForBrightness(brightness, imageUrl) {
+            if (isOceanWallpaper(imageUrl || '')) {
+                document.documentElement.style.setProperty('--desktop-text-color', '#ffffff');
+                document.documentElement.style.setProperty('--desktop-text-secondary', '#9ca3af');
+                const desktopIcons = document.querySelectorAll('.desktop-icon span');
+                desktopIcons.forEach(el => el.style.textShadow = '1px 1px 2px rgba(0,0,0,0.8)');
+                return;
+            }
+            const isLight = brightness > 0.45;
+            document.documentElement.style.setProperty('--desktop-text-color', isLight ? '#1a1a1a' : '#ffffff');
+            document.documentElement.style.setProperty('--desktop-text-secondary', isLight ? '#6b7280' : '#9ca3af');
+            const desktopIcons = document.querySelectorAll('.desktop-icon span');
+            desktopIcons.forEach(el => el.style.textShadow = isLight ? 'none' : '1px 1px 2px rgba(0,0,0,0.8)');
+        }
+
+        function saveWallpaperSettings(url, accentColor, type) {
+            try {
+                const settings = { url: url || '', accentColor: accentColor || '#3b82f6', type: type || 'image' };
+                localStorage.setItem('mxos_wallpaper_settings', JSON.stringify(settings));
+            } catch (e) { console.warn('保存壁纸设置失败:', e); }
+        }
+
+        try {
+            if (savedWallpaperSettings.url && savedWallpaperSettings.type !== 'video') {
+                const wallpaperBg = document.getElementById('wallpaper-bg');
+                if (wallpaperBg) {
+                    wallpaperBg.style.backgroundImage = `url('${savedWallpaperSettings.url}')`;
+                }
+                updateLockScreenWallpaper(savedWallpaperSettings.url);
+                detectWallpaperBrightness(savedWallpaperSettings.url, function(brightness) {
+                    applyTextColorsForBrightness(brightness, savedWallpaperSettings.url);
+                });
+            } else if (savedWallpaperSettings.type === 'video') {
+                const wallpaperBg = document.getElementById('wallpaper-bg');
+                if (wallpaperBg) {
+                    wallpaperBg.style.opacity = '0';
+                }
+                const lockScreen = document.getElementById('lock-screen');
+                if (lockScreen) {
+                    lockScreen.style.background = 'none';
+                }
+            } else {
+                const wallpaperBg = document.getElementById('wallpaper-bg');
+                if (wallpaperBg) {
+                    const bgImage = wallpaperBg.style.backgroundImage.replace(/url\(['"]?/g, '').replace(/['"]?\)/g, '').replace(/['"]/g, '') || '';
+                    updateLockScreenWallpaper(bgImage);
+                    if (bgImage) {
+                        detectWallpaperBrightness(bgImage, function(brightness) {
+                            applyTextColorsForBrightness(brightness, bgImage);
+                        });
+                    }
+                }
+            }
+            if (savedWallpaperSettings.accentColor) {
+                document.documentElement.style.setProperty('--accent-color', savedWallpaperSettings.accentColor);
+            }
+        } catch (e) {}
 
         let db = null;
         let dbReady = false;
         const DB_NAME = 'MXOS_FileSystem';
         const DB_VERSION = 1;
+
+        async function saveVideoWallpaperToDB(blob, callback) {
+            try {
+                const request = indexedDB.open('MXOS_FileSystem');
+                request.onsuccess = () => {
+                    const database = request.result;
+                    const tx = database.transaction('files', 'readwrite');
+                    const store = tx.objectStore('files');
+                    store.put({ id: '__video_wallpaper__', type: 'system_video', blob: blob });
+                    tx.oncomplete = () => { database.close(); callback(); };
+                    tx.onerror = () => { database.close(); console.warn('保存视频壁纸失败'); callback(); };
+                };
+            } catch (e) { console.warn('保存视频壁纸失败:', e); callback(); }
+        }
+
+        function loadVideoWallpaperFromDB(callback) {
+            try {
+                const request = indexedDB.open('MXOS_FileSystem');
+                request.onsuccess = () => {
+                    const database = request.result;
+                    const tx = database.transaction('files', 'readonly');
+                    const store = tx.objectStore('files');
+                    const getReq = store.get('__video_wallpaper__');
+                    getReq.onsuccess = () => {
+                        const result = getReq.result;
+                        database.close();
+                        if (result && result.blob) {
+                            const url = URL.createObjectURL(result.blob);
+                            callback(url);
+                        } else {
+                            callback(null);
+                        }
+                    };
+                    getReq.onerror = () => { database.close(); callback(null); };
+                };
+                request.onerror = () => callback(null);
+            } catch (e) { callback(null); }
+        }
 
         async function openFileDB() {
             return new Promise((resolve, reject) => {
@@ -3353,6 +3496,49 @@
         }
 
         initFileSystem();
+
+        loadVideoWallpaperFromDB(function(url) {
+            if (url && savedWallpaperSettings.type === 'video') {
+                const videoWallpaper = document.getElementById('video-wallpaper');
+                if (videoWallpaper) {
+                    videoWallpaper.src = url;
+                    videoWallpaper.style.display = 'block';
+                    videoWallpaper.addEventListener('canplay', function() {
+                        videoWallpaper.play();
+                        try {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.width = 50;
+                            canvas.height = 50;
+                            ctx.drawImage(videoWallpaper, 0, 0, 50, 50);
+                            const imageData = ctx.getImageData(0, 0, 50, 50);
+                            const data = imageData.data;
+                            let totalLuminance = 0;
+                            const pixelCount = 50 * 50;
+                            for (let i = 0; i < data.length; i += 4) {
+                                const r = data[i], g = data[i + 1], b = data[i + 2];
+                                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                                totalLuminance += luminance;
+                            }
+                            const avgBrightness = totalLuminance / pixelCount;
+                            applyTextColorsForBrightness(avgBrightness);
+                        } catch (e) { applyTextColorsForBrightness(0.5); }
+                    }, { once: true });
+                }
+                const lockScreenEl = document.getElementById('lock-screen');
+                if (lockScreenEl) {
+                    const lockVideo = document.createElement('video');
+                    lockVideo.id = 'lock-video';
+                    lockVideo.autoplay = true;
+                    lockVideo.loop = true;
+                    lockVideo.muted = true;
+                    lockVideo.playsInline = true;
+                    lockVideo.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;';
+                    lockVideo.src = url;
+                    lockScreenEl.insertBefore(lockVideo, lockScreenEl.firstChild);
+                }
+            }
+        });
 
         function openApp(appId, fileData = null) {
             if ((appId === 'this-pc' || appId === 'recycle-bin') && !dbReady) {
@@ -3802,7 +3988,7 @@
                                 const driveSize = item.drive === 'C' ? '234 GB 可用，共 476 GB' : '156 GB 可用，共 292 GB';
                                 const driveWidth = item.drive === 'C' ? '51%' : '47%';
                                 html += `<div class="drive-item" data-drive="${item.drive}">
-                                    <svg width="48" height="48" viewBox="0 0 40 40"><use href="#svg-hard-disk"/></svg>
+                                    <svg width="48" height="48" viewBox="0 0 40 40"><use href="#svg-this-pc"/></svg>
                                     <div class="drive-info">
                                         <div class="drive-name">${item.name}</div>
                                         <div class="drive-size">${driveSize}</div>
@@ -4319,9 +4505,10 @@
                     };
                     
                     const personalizationSettings = {
-                        wallpaper: '日落',
-                        accentColor: '#3b82f6'
+                        wallpaper: savedWallpaperSettings.wallpaper || '日落',
+                        accentColor: savedWallpaperSettings.accentColor || '#3b82f6'
                     };
+                    
                     
                     const personalizationSubPages = {
                         'background': {
@@ -4635,7 +4822,11 @@
                                         <div class="wallpaper-preview-label">预览</div>
                                         <div class="wallpaper-preview-large" id="wallpaper-preview" style="background-image: url('${currentWallpaper.url}')"></div>
                                         <div class="wallpaper-thumbnails">${thumbnailsHtml}
-                                            <div class="wallpaper-import-btn" id="wallpaper-import" title="导入本地壁纸">+</div>
+                                            <div class="wallpaper-import-btn" id="wallpaper-import" title="导入本地图片壁纸">+</div>
+                                            <div class="video-wallpaper-btn" id="video-wallpaper-import" title="导入动态壁纸 (mp4)">
+                                                <span class="btn-icon">▶</span>
+                                                <span class="btn-label">MP4</span>
+                                            </div>
                                         </div>
                                     </div>
                                 `;
@@ -4895,11 +5086,29 @@
                                 const wallpaperBg = document.getElementById('wallpaper-bg');
                                 if (wallpaperBg) {
                                     wallpaperBg.style.backgroundImage = `url('${wallpaperUrl}')`;
+                                    wallpaperBg.style.opacity = '1';
+                                }
+                                const videoWallpaper = document.getElementById('video-wallpaper');
+                                if (videoWallpaper) {
+                                    videoWallpaper.style.display = 'none';
+                                    videoWallpaper.pause();
+                                    videoWallpaper.src = '';
+                                }
+                                const lockScreen = document.getElementById('lock-screen');
+                                if (lockScreen) {
+                                    const existingLockVideo = document.getElementById('lock-video');
+                                    if (existingLockVideo) existingLockVideo.remove();
                                 }
                                 const preview = document.getElementById('wallpaper-preview');
                                 if (preview) {
+                                    preview.innerHTML = '';
                                     preview.style.backgroundImage = `url('${wallpaperUrl}')`;
                                 }
+                                updateLockScreenWallpaper(wallpaperUrl);
+                                saveWallpaperSettings(wallpaperUrl, personalizationSettings.accentColor, 'image');
+                                detectWallpaperBrightness(wallpaperUrl, function(brightness) {
+                                    applyTextColorsForBrightness(brightness, wallpaperUrl);
+                                });
                                 mainEl.querySelectorAll('.wallpaper-thumbnail').forEach(t => t.classList.remove('active'));
                                 thumb.classList.add('active');
                             });
@@ -4924,14 +5133,103 @@
                                                 }
                                                 const preview = document.getElementById('wallpaper-preview');
                                                 if (preview) {
+                                                    preview.innerHTML = '';
                                                     preview.style.backgroundImage = `url('${event.target.result}')`;
                                                 }
+                                                updateLockScreenWallpaper(event.target.result);
                                                 personalizationSettings.wallpaper = event.target.result;
+                                                saveWallpaperSettings(event.target.result, personalizationSettings.accentColor, 'image');
+                                                detectWallpaperBrightness(event.target.result, function(brightness) {
+                                                    applyTextColorsForBrightness(brightness, event.target.result);
+                                                });
                                                 mainEl.querySelectorAll('.wallpaper-thumbnail').forEach(t => t.classList.remove('active'));
                                             };
                                             img.src = event.target.result;
                                         };
                                         reader.readAsDataURL(file);
+                                    }
+                                };
+                                input.click();
+                            });
+                        }
+                        
+                        const videoImportBtn = document.getElementById('video-wallpaper-import');
+                        if (videoImportBtn) {
+                            videoImportBtn.addEventListener('click', () => {
+                                const input = document.createElement('input');
+                                input.type = 'file';
+                                input.accept = 'video/mp4,video/webm,video/ogg';
+                                input.onchange = (e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        const url = URL.createObjectURL(file);
+                                        const videoWallpaper = document.getElementById('video-wallpaper');
+                                        const wallpaperBg = document.getElementById('wallpaper-bg');
+                                        if (videoWallpaper) {
+                                            videoWallpaper.src = url;
+                                            videoWallpaper.style.display = 'block';
+                                            videoWallpaper.play();
+                                            if (wallpaperBg) {
+                                                wallpaperBg.style.opacity = '0';
+                                            }
+                                        }
+                                        const lockScreen = document.getElementById('lock-screen');
+                                        if (lockScreen) {
+                                            lockScreen.style.background = 'none';
+                                            const lockVideo = document.createElement('video');
+                                            lockVideo.id = 'lock-video';
+                                            lockVideo.autoplay = true;
+                                            lockVideo.loop = true;
+                                            lockVideo.muted = true;
+                                            lockVideo.playsInline = true;
+                                            lockVideo.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;';
+                                            lockVideo.src = url;
+                                            const existingLockVideo = document.getElementById('lock-video');
+                                            if (existingLockVideo) existingLockVideo.remove();
+                                            lockScreen.insertBefore(lockVideo, lockScreen.firstChild);
+                                        }
+                                        const preview = document.getElementById('wallpaper-preview');
+                                        if (preview) {
+                                            const img = document.createElement('img');
+                                            img.style.width = '100%';
+                                            img.style.height = '100%';
+                                            img.style.objectFit = 'cover';
+                                            img.style.borderRadius = '8px';
+                                            img.src = url;
+                                            preview.innerHTML = '';
+                                            preview.appendChild(img);
+                                        }
+                                        personalizationSettings.wallpaper = 'video';
+                                        saveWallpaperSettings(url, personalizationSettings.accentColor, 'video');
+                                        saveVideoWallpaperToDB(file, function() {});
+                                        try {
+                                            const videoEl = document.getElementById('video-wallpaper');
+                                            if (videoEl) {
+                                                const canvas = document.createElement('canvas');
+                                                const ctx = canvas.getContext('2d');
+                                                canvas.width = 50;
+                                                canvas.height = 50;
+                                                videoEl.addEventListener('seeked', function onSeeked() {
+                                                    try {
+                                                        ctx.drawImage(videoEl, 0, 0, 50, 50);
+                                                        const imageData = ctx.getImageData(0, 0, 50, 50);
+                                                        const data = imageData.data;
+                                                        let totalLuminance = 0;
+                                                        const pixelCount = 50 * 50;
+                                                        for (let i = 0; i < data.length; i += 4) {
+                                                            const r = data[i], g = data[i + 1], b = data[i + 2];
+                                                            const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                                                            totalLuminance += luminance;
+                                                        }
+                                                        const avgBrightness = totalLuminance / pixelCount;
+                                                        applyTextColorsForBrightness(avgBrightness);
+                                                    } catch (e) { applyTextColorsForBrightness(0.5); }
+                                                    videoEl.removeEventListener('seeked', onSeeked);
+                                                }, { once: true });
+                                                videoEl.currentTime = 1;
+                                            }
+                                        } catch (e) { applyTextColorsForBrightness(0.5); }
+                                        mainEl.querySelectorAll('.wallpaper-thumbnail').forEach(t => t.classList.remove('active'));
                                     }
                                 };
                                 input.click();
@@ -4948,6 +5246,7 @@
                                 });
                                 mainEl.querySelectorAll('.accent-color-option').forEach(o => o.classList.remove('active'));
                                 option.classList.add('active');
+                                saveWallpaperSettings(savedWallpaperSettings.url || '', colorValue, savedWallpaperSettings.type || 'image');
                             });
                         });
                     };
@@ -5136,8 +5435,8 @@
                                 <div class="about-logo">
                                     <svg width="80" height="80" viewBox="0 0 40 40"><use href="#svg-windows"/></svg>
                                 </div>
-                                <div class="about-title">喜PCOS</div>
-                                <div class="about-version">版本 1.1.7</div>
+                                <div class="about-title">MXOS</div>
+                                <div class="about-version">版本 1.2.0</div>
                             </div>
                             <div class="about-section">
                                 <div class="about-section-title">设备信息</div>
@@ -5161,7 +5460,7 @@
                                 <div class="about-grid">
                                     <div class="about-item">
                                         <div class="about-item-label">系统版本</div>
-                                        <div class="about-item-value">喜PCOS 1.1.7</div>
+                                        <div class="about-item-value">MXOS 1.2.0</div>
                                     </div>
                                     <div class="about-item">
                                         <div class="about-item-label">系统类型</div>
@@ -5693,8 +5992,7 @@
 
         function startDrag(e, windowEl) {
             if (windowEl.classList.contains('maximized')) return;
-            windowEl.style.opacity = '0.8';
-            windowEl.style.transition = 'none';
+            windowEl.classList.add('no-animate');
             var clientX = e.touches ? e.touches[0].clientX : e.clientX;
             var clientY = e.touches ? e.touches[0].clientY : e.clientY;
             dragState = {
@@ -5768,12 +6066,13 @@
         };
 
         var iconDragState = null;
-        var gridSize = 100;
+        var gridSize = 90;
         var gridOffsetX = 20;
         var gridOffsetY = 20;
 
         function snapToGrid(value) {
             var remainder = (value - gridOffsetX) % gridSize;
+            if (remainder < 0) remainder += gridSize;
             if (remainder < gridSize / 2) {
                 return value - remainder;
             } else {
@@ -5794,6 +6093,108 @@
             }
             return false;
         }
+
+        function autoWrapDesktopIcons() {
+            var icons = document.querySelectorAll('.desktop-icon');
+            var availableHeight = window.innerHeight - 60;
+            var iconHeight = 90;
+            var maxPerColumn = Math.floor(availableHeight / iconHeight);
+            var columnWidth = 90;
+            var startX = 20;
+            var startY = 20;
+
+            if (maxPerColumn < 1) maxPerColumn = 1;
+
+            var draggedIcons = {};
+            var nonDraggedIcons = [];
+            icons.forEach(function(icon) {
+                if (icon.wasDragged) {
+                    draggedIcons[icon.dataset.app] = icon;
+                } else {
+                    nonDraggedIcons.push(icon);
+                }
+            });
+
+            var col = 0;
+            var row = 0;
+            var occupiedPositions = [];
+
+            nonDraggedIcons.forEach(function(icon) {
+                if (row >= maxPerColumn) {
+                    col++;
+                    row = 0;
+                }
+                var newLeft = startX + col * columnWidth;
+                var newTop = startY + row * iconHeight;
+                icon.style.left = newLeft + 'px';
+                icon.style.top = newTop + 'px';
+                occupiedPositions.push({ left: newLeft, top: newTop });
+                row++;
+            });
+
+            for (var appId in draggedIcons) {
+                var icon = draggedIcons[appId];
+                var iconLeft = icon.offsetLeft;
+                var iconTop = icon.offsetTop;
+
+                if (iconLeft < startX) {
+                    icon.style.left = startX + 'px';
+                    iconLeft = startX;
+                }
+                if (iconTop < startY) {
+                    icon.style.top = startY + 'px';
+                    iconTop = startY;
+                }
+
+                var colIndex = Math.round((iconLeft - startX) / columnWidth);
+                var rowIndex = Math.round((iconTop - startY) / iconHeight);
+
+                if (colIndex < 0) colIndex = 0;
+                if (rowIndex < 0) rowIndex = 0;
+
+                var snappedLeft = startX + colIndex * columnWidth;
+                var snappedTop = startY + rowIndex * iconHeight;
+
+                var snapOccupied = false;
+                for (var i = 0; i < occupiedPositions.length; i++) {
+                    if (Math.abs(occupiedPositions[i].left - snappedLeft) < 5 &&
+                        Math.abs(occupiedPositions[i].top - snappedTop) < 5) {
+                        snapOccupied = true;
+                        break;
+                    }
+                }
+
+                if (snapOccupied) {
+                    var found = false;
+                    for (var c = colIndex; c < 10 && !found; c++) {
+                        for (var r = rowIndex; r < maxPerColumn && !found; r++) {
+                            var testLeft = startX + c * columnWidth;
+                            var testTop = startY + r * iconHeight;
+                            var isFree = true;
+                            for (var j = 0; j < occupiedPositions.length; j++) {
+                                if (Math.abs(occupiedPositions[j].left - testLeft) < 5 &&
+                                    Math.abs(occupiedPositions[j].top - testTop) < 5) {
+                                    isFree = false;
+                                    break;
+                                }
+                            }
+                            if (isFree) {
+                                icon.style.left = testLeft + 'px';
+                                icon.style.top = testTop + 'px';
+                                occupiedPositions.push({ left: testLeft, top: testTop });
+                                found = true;
+                            }
+                        }
+                    }
+                } else {
+                    icon.style.left = snappedLeft + 'px';
+                    icon.style.top = snappedTop + 'px';
+                    occupiedPositions.push({ left: snappedLeft, top: snappedTop });
+                }
+            }
+        }
+
+        window.addEventListener('resize', autoWrapDesktopIcons);
 
         document.querySelectorAll('.desktop-icon').forEach(function(icon) {
             var appId = icon.dataset.app;
@@ -5831,6 +6232,8 @@
                 };
             }, { passive: true });
         });
+
+        autoWrapDesktopIcons();
 
         document.addEventListener('mousemove', function(e) {
             if (!iconDragState) return;
